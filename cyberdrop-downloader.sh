@@ -45,7 +45,7 @@ elif [ "$1" == "-m" ]; then
         ALBUM_ID=$(basename "$LINE" | cut -d? -f1);
         mkdir "$ALBUM_NAME ($ALBUM_ID)" && cd "$ALBUM_NAME ($ALBUM_ID)";
 
-        curl "$LINE" | grep 'id="file"' | cut -d '"' -f6 > LINKS;
+        curl "$LINE" | grep 'id="file"' | cut -d '"' -f6 | sed "s/&#39;/'/g" > LINKS;
         wget -i LINKS -q --show-progress;
         rm LINKS;
         cd "..";
