@@ -65,7 +65,7 @@ else
     ALBUM_ID=$(basename "$1" | cut -d? -f1);
     mkdir "$ALBUM_NAME ($ALBUM_ID)" && cd "$ALBUM_NAME ($ALBUM_ID)";
 
-    curl "$1" | grep 'id="file"' | cut -d '"' -f6 > LINKS;
+    curl "$1" | grep 'id="file"' | cut -d '"' -f6 | sed "s/&#39;/'/g" > LINKS;
     wget -i LINKS -q --show-progress;
     rm LINKS;
     cd "..";
